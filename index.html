@@ -50,11 +50,11 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-02-17T05:36:32.267Z"><a href="/2019/02/17/jsKeyNotes/">2019-02-17</a></time>
+        <time datetime="2019-02-17T04:48:53.000Z"><a href="/2019/02/17/jsKeyNotes/">2019-02-17</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/02/17/jsKeyNotes/"></a></h1>
+    <h1 class="title"><a href="/2019/02/17/jsKeyNotes/">JS Keynotes</a></h1>
   
 
     </header>
@@ -70,9 +70,25 @@
 <li>window.frames</li>
 <li>window.screen<br>…</li>
 </ul>
-<p>思考一个 histtory BFC 问题 <a href="https://efe.baidu.com/blog/bfcache-analysis-and-fix/。" target="_blank" rel="noopener">https://efe.baidu.com/blog/bfcache-analysis-and-fix/。</a><br>这里描述了往返缓存的一个问题场景</p>
-<p><img src="https://developer.mozilla.org/en-US/docs/Archive/Misc_top_level/Working_with_BFCache" alt="BFCache(back-forward cache)"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;pageshow&quot;, function(event) &#123;</span><br><span class="line">    const historyTraversal = event.persisted || ( typeof window.performance != &quot;undefined&quot; &amp;&amp; </span><br><span class="line">                              window.performance.navigation.type === 2 )</span><br><span class="line">    if (historyTraversal)            &#123;</span><br><span class="line">        window.location.reload();</span><br><span class="line">    &#125;              </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button" alt="Stackoverflow关于问题的描述"></p>
+<p>思考一个 histtory BFC 问题 <a href="https://efe.baidu.com/blog/bfcache-analysis-and-fix/。" target="_blank" rel="noopener">https://efe.baidu.com/blog/bfcache-analysis-and-fix/。</a><br>这里描述了往返缓存的一个问题场景<br>相关Reference: </p>
+<ul>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Archive/Misc_top_level/Working_with_BFCache" target="_blank" rel="noopener">BFCache(back-forward cache)</a> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;pageshow&quot;, function(event) &#123;</span><br><span class="line">    const historyTraversal = event.persisted || ( typeof window.performance != &quot;undefined&quot; &amp;&amp; </span><br><span class="line">                              window.performance.navigation.type === 2 )</span><br><span class="line">    if (historyTraversal)            &#123;</span><br><span class="line">        window.location.reload();</span><br><span class="line">    &#125;              </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button" target="_blank" rel="noopener">Stackoverflow关于问题的描述</a></p>
+</li>
+</ul>
+<h3 id="防篡改对象"><a href="#防篡改对象" class="headerlink" title="防篡改对象"></a>防篡改对象</h3><ol>
+<li><p>不可扩展对象，不能增加新属性，可以修改值和删除属性<br>Object.preventExtensible / Object.isExtensible</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let peron = &#123; name: &quot;Bob&quot; &#125;;</span><br><span class="line">Object.preventExtensible(person);</span><br><span class="line">person.age = 11;</span><br><span class="line">console.log(person.age); // undefined</span><br><span class="line">delete person.name // success</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>密封对象seal，不能删除和添加属性及方法，只能修改属性值[Configurable]特性是false</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;name: &quot;bob&quot;&#125;;</span><br><span class="line">Object.seal(person);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>冻结对象 冻结的对象既不能扩展又是密封的，且[Writable]属性为false</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;name: &quot;Bob&quot;&#125;;</span><br><span class="line">Object.freeze(person);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
