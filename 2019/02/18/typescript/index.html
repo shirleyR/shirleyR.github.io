@@ -3,13 +3,18 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Shirley&#39;s Pages</title>
+  <title>Typescript notes | Shirley&#39;s Pages</title>
   <meta name="author" content="shirley Ren">
+  
+  <meta name="description" content="感觉Typescript把js的那些自由都在编译时限制了
+Interface
+Indexable Types 索引，这个在js中类似arr[10] 或者 ageMap[“jane”]。由于js会自动将key转化为string所以不需要写成“string|number”
+123456789101112">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="Typescript notes">
   <meta property="og:site_name" content="Shirley&#39;s Pages">
 
   
@@ -45,8 +50,7 @@
 <div class="clearfix"></div>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
@@ -56,7 +60,7 @@
       
       
   
-    <h1 class="title"><a href="/2019/02/18/typescript/">Typescript notes</a></h1>
+    <h1 class="title">Typescript notes</h1>
   
 
     </header>
@@ -94,66 +98,6 @@
       
         
         
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-02-17T04:48:53.000Z"><a href="/2019/02/17/jsKeyNotes/">2019-02-17</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/02/17/jsKeyNotes/">JS Keynotes</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h3><p>BOM 包含的几个元素</p>
-<ul>
-<li>window.location</li>
-<li>window.navigator</li>
-<li>window.history</li>
-<li>window.open()/close()</li>
-<li>setTimeout/setInterval</li>
-<li>window.frames</li>
-<li>window.screen<br>…</li>
-</ul>
-<p>思考一个 histtory BFC 问题 <a href="https://efe.baidu.com/blog/bfcache-analysis-and-fix/。" target="_blank" rel="noopener">https://efe.baidu.com/blog/bfcache-analysis-and-fix/。</a><br>这里描述了往返缓存的一个问题场景<br>相关Reference: </p>
-<ul>
-<li><p><a href="https://developer.mozilla.org/en-US/docs/Archive/Misc_top_level/Working_with_BFCache" target="_blank" rel="noopener">BFCache(back-forward cache)</a> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&quot;pageshow&quot;, function(event) &#123;</span><br><span class="line">    const historyTraversal = event.persisted || ( typeof window.performance != &quot;undefined&quot; &amp;&amp; </span><br><span class="line">                              window.performance.navigation.type === 2 )</span><br><span class="line">    if (historyTraversal)            &#123;</span><br><span class="line">        window.location.reload();</span><br><span class="line">    &#125;              </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a href="https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button" target="_blank" rel="noopener">Stackoverflow关于问题的描述</a></p>
-</li>
-</ul>
-<h3 id="防篡改对象"><a href="#防篡改对象" class="headerlink" title="防篡改对象"></a>防篡改对象</h3><ol>
-<li><p>不可扩展对象，不能增加新属性，可以修改值和删除属性<br>Object.preventExtensible / Object.isExtensible</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let peron = &#123; name: &quot;Bob&quot; &#125;;</span><br><span class="line">Object.preventExtensible(person);</span><br><span class="line">person.age = 11;</span><br><span class="line">console.log(person.age); // undefined</span><br><span class="line">delete person.name // success</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>密封对象seal，不能删除和添加属性及方法，只能修改属性值[Configurable]特性是false</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;name: &quot;bob&quot;&#125;;</span><br><span class="line">Object.seal(person);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>冻结对象 冻结的对象既不能扩展又是密封的，且[Writable]属性为false</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;name: &quot;Bob&quot;&#125;;</span><br><span class="line">Object.freeze(person);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
-      
-    </div>
-    <footer>
-      
-        
         
       
       <div class="clearfix"></div>
@@ -162,51 +106,27 @@
 </article>
 
 
+<section id="comment">
+  <h1 class="title">Comments</h1>
 
-
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-01-12T09:48:53.000Z"><a href="/2019/01/12/firstBlog/">2019-01-12</a></time>
-      
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="https://shirleyr.github.io/2019/02/18/typescript/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
-    <h1 class="title"><a href="/2019/01/12/firstBlog/">First Blog from 2019</a></h1>
-  
+</section>
 
-    </header>
-    <div class="entry">
-      
-        <h2 id="Daily-record"><a href="#Daily-record" class="headerlink" title="Daily record"></a>Daily record</h2><h3 id="Why-try-to-start-this-blog"><a href="#Why-try-to-start-this-blog" class="headerlink" title="Why try to start this blog"></a>Why try to start this blog</h3><h3 id="Learning-list"><a href="#Learning-list" class="headerlink" title="Learning list"></a>Learning list</h3><ul>
-<li><a href="https://medium.com/front-end-weekly/webpack-and-dynamic-imports-doing-it-right-72549ff49234" target="_blank" rel="noopener">Webpack Dynamic loading</a></li>
-<li><a href="https://http2.github.io/faq/#why-is-http2-multiplexed" target="_blank" rel="noopener">Http2</a></li>
-<li><a href="https://gist.github.com/btfak/18938572f5df000ebe06fbd1872e4e39" target="_blank" rel="noopener">Deploy hexo</a></li>
-</ul>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-<nav id="pagination">
-  
-  
-  <div class="clearfix"></div>
-</nav></div></div>
+</div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
